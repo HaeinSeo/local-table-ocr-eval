@@ -1,0 +1,116 @@
+root: E:/DU_TABLE
+output_dir: E:/DU_TABLE/runs/table_benchmark_current
+sample_count: 20
+sample_seed: 20260917
+timeout_seconds: 600
+
+datasets:
+  pubtabnet:
+    type: pubtabnet
+    image_dir: E:/DU_TABLE/data/PubTabNet/pubtabnet/val
+    annotation: E:/DU_TABLE/data/PubTabNet/pubtabnet/PubTabNet_2.0.0.jsonl
+    split: val
+  omnidocbench_tables:
+    type: omnidocbench_tables
+    root: E:/DU_TABLE/data/OmniDocBench
+    manifest: E:/DU_TABLE/data/OmniDocBench/manifest.json
+    revision: E:/DU_TABLE/data/OmniDocBench/revision.txt
+
+evaluators:
+  teds_source: E:/DU_TABLE/PubTabNet/src/metric.py
+  teds_s_source: E:/DU_TABLE/OmniDocBench/src/metrics/table_metric.py
+  normalization:
+    html: "Extract first table, parse with lxml HTML parser, strip comments, keep thead/tbody/th/td and rowspan/colspan."
+    text: "Collapse whitespace in cell text. TEDS keeps inline tags inside cells as in PubTabNet implementation."
+    numeric: "Custom auxiliary metric. Expand rowspan/colspan to a logical grid; a GT numeric cell counts as correct only when the same grid position exists in prediction and normalized numeric value matches. Normalization removes surrounding spaces, commas, percent/unit suffix spacing, unicode minus/dash variants, and compares Decimal values when possible."
+
+targets:
+  - id: mineru
+    label: MinerU
+    kind: parser
+    command_candidates: ["magic-pdf", "mineru"]
+    input: image
+  - id: docling
+    label: Docling
+    kind: parser
+    command_candidates: ["docling"]
+    input: image_or_pdf
+  - id: marker
+    label: Marker
+    kind: parser
+    command_candidates: ["marker_single", "marker"]
+    input: image_or_pdf
+  - id: pp_structure_v3
+    label: PP-StructureV3
+    kind: parser
+    command_candidates: ["paddleocr"]
+    input: image
+  - id: opendataloader_pdf_hybrid_docling_fast
+    label: OpenDataLoader PDF
+    backend: hybrid:docling-fast
+    kind: parser
+    command_candidates: ["opendataloader-pdf"]
+    hybrid_server_command: "opendataloader-pdf-hybrid --port 5002 --force-ocr"
+    input: image_pdf
+  - id: paddleocr_vl
+    label: PaddleOCR-VL
+    kind: ocr_model
+    command_candidates: ["paddleocr"]
+    input: image
+  - id: glm_ocr_official
+    label: GLM-OCR official
+    kind: ocr_model
+    repo: E:/DU_TABLE/GLM-OCR
+    input: image
+  - id: deepseek_ocr_2_official
+    label: DeepSeek-OCR-2 official
+    kind: ocr_model
+    repo: E:/DU_TABLE/DeepSeek-OCR-2
+    input: image
+  - id: ollama_qwen_vl
+    label: Qwen-VL family via Ollama
+    kind: ollama_vision
+    model_patterns: ["qwen*vl*", "qwen*vision*"]
+    input: image
+  - id: ollama_qwen3_6_35b
+    label: qwen3.6:35b via Ollama
+    kind: ollama_vision
+    model_tag: qwen3.6:35b
+    input: image
+  - id: ollama_qwen3_5_9b
+    label: qwen3.5:9b via Ollama
+    kind: ollama_vision
+    model_tag: qwen3.5:9b
+    input: image
+  - id: ollama_glm_ocr
+    label: glm-ocr via Ollama
+    kind: ollama_vision
+    model_tag: glm-ocr
+    input: image
+  - id: ollama_minicpm_v4_5_8b
+    label: minicpm-v4.5:8b via Ollama
+    kind: ollama_vision
+    model_tag: minicpm-v4.5:8b
+    input: image
+
+prompts:
+  html_table_v1: |
+    You are given an image containing one table, possibly with a caption, title, source note, or footnotes around it.
+    Return only the HTML <table> for the grid itself.
+    Exclude captions, table numbers/titles, source lines, explanatory notes, and footnotes that are outside the grid.
+    Do not put captions or notes into table rows.
+    Preserve the table grid rows, columns, headers, empty cells, rowspan and colspan when visible.
+    Do not invent merged cells when the image does not show them.
+    Do not include Markdown fences or explanations.
+  deepseek_ocr_markdown_v1: |
+    <|grounding|>Convert the document to markdown.
+  deepseek_ocr_prompt_v1: |
+    <|grounding|>Convert the document to markdown.
+  deepseek_ocr_ocr_image_v1: |
+    <|grounding|>OCR this image.
+  paddleocr_vl_table_v1: |
+    Table Recognition:
+  ocr_table_html_v1: |
+    Tables should be expressed in HTML format. Return only the table.
+  dots_mocr_table_v1: |
+    Parse the document image. Return the table as HTML.

@@ -1,0 +1,32 @@
+# Python/cache
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+env/
+
+# Local benchmark data and generated outputs
+data/
+runs/
+
+# Large third-party/model repositories checked out locally
+DeepSeek-OCR-2/
+docling/
+GLM-OCR/
+marker/
+MinerU/
+OmniDocBench/
+opendataloader-pdf/
+PaddleOCR/
+PubTabNet/
+Qwen3-VL/
+
+# Local logs and temporary files
+*.log
+*.tmp
+*.bak
+Thumbs.db
+.DS_Store
