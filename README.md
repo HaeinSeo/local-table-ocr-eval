@@ -2,6 +2,8 @@
 
 Table-image recognition benchmark/evaluation pipeline for comparing OCR/VLM table extraction outputs against HTML ground truth.
 
+🙌 Click https://haeinseo.github.io/local-table-ocr-eval/?v=bcd8e82
+
 ## What This Repository Contains
 
 - Common dataset loaders and evaluators in `table_benchmark/`
