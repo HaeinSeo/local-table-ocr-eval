@@ -969,7 +969,7 @@ iframe{{width:100%;height:560px;border:1px solid #b9934a;background:#fff;border-
 .paths{{font-size:12px;color:#c9b27c;word-break:break-all;line-height:1.5}}
 .ranking-table{{width:100%;border-collapse:collapse;margin-top:8px;font-size:13px}}
 .ranking-table th,.ranking-table td{{border-bottom:1px solid #3d321c;padding:8px 9px;text-align:right}}
-.ranking-table th{{color:#d4af5f;background:#14110b;position:sticky;top:70px}}
+.ranking-table th{{color:#d4af5f;background:#14110b}}
 .ranking-table td:first-child,.ranking-table th:first-child,.ranking-table td:nth-child(2),.ranking-table th:nth-child(2){{text-align:left}}
 .ranking-table td{{vertical-align:middle}}
 .ranking-table .run-cell{{min-width:310px;max-width:520px;text-align:left}}
