@@ -1011,15 +1011,18 @@ iframe{{width:100%;height:560px;border:1px solid #b9934a;background:#fff;border-
   .panel{{padding:10px;border-radius:7px}}
   iframe{{height:360px}}
   .formula-box,.preprocess-guide,.conclusion-grid{{grid-template-columns:1fr}}
-  .ranking-table,.ranking-table tbody,.ranking-table tr,.ranking-table td{{display:block;width:100%}}
+  .ranking-table,.ranking-table tbody{{display:block;width:100%}}
   .ranking-table thead{{display:none}}
-  .ranking-table tr{{border:1px solid #3d321c;border-radius:8px;margin:10px 0;padding:8px;background:#0b0b0b}}
+  .ranking-table tr{{display:grid;grid-template-columns:46px minmax(0,1fr);gap:0 10px;border:1px solid #3d321c;border-radius:8px;margin:10px 0;padding:9px;background:#0b0b0b}}
   .ranking-table tbody tr.best-model{{background:#211908;border-color:#b9934a}}
-  .ranking-table td{{border-bottom:1px solid #241d10;text-align:right;padding:7px 4px 7px 42%;position:relative;min-height:30px}}
-  .ranking-table td:last-child{{border-bottom:0}}
-  .ranking-table td::before{{content:attr(data-label);position:absolute;left:4px;top:7px;width:38%;color:#d4af5f;text-align:left;font-weight:700}}
-  .ranking-table .run-cell{{min-width:0;max-width:none;text-align:left;padding-left:4px}}
+  .ranking-table td{{display:flex;align-items:center;justify-content:space-between;grid-column:1 / -1;border-bottom:1px solid #241d10;text-align:right;padding:7px 2px;position:relative;min-height:30px}}
+  .ranking-table td::before{{content:attr(data-label);color:#d4af5f;text-align:left;font-weight:700;padding-right:12px}}
+  .ranking-table td:first-child{{grid-column:1;grid-row:1;display:flex;align-items:center;justify-content:center;border:1px solid #6f5729;border-radius:999px;background:#15110a;color:#ffd66b;font-weight:900;min-height:34px;padding:0;text-align:center}}
+  .ranking-table td:first-child::before{{display:none}}
+  .ranking-table .run-cell{{grid-column:2;grid-row:1;display:block;min-width:0;max-width:none;text-align:left;padding:0 0 8px 0;border-bottom:0}}
   .ranking-table .run-cell::before{{display:none}}
+  .ranking-table .run-cell + td{{border-top:1px solid #3d321c;margin-top:2px}}
+  .ranking-table td:last-child{{border-bottom:0}}
   .run-main{{font-size:14px}}
   .run-sub{{font-size:10px}}
 }}
